@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Header/>
+    <SOAP-ENV:Body>
+        <RunRequest xmlns="https://ws.eip.ru/Interpol_request/">
+            <RequestID>00000000202105230627280001</RequestID>
+            <DstIR_Code>
+                <IR_CodeAccess>
+                    <AccessLevel>1</AccessLevel>
+                    <IR_Code>F14</IR_Code>
+                </IR_CodeAccess>
+            </DstIR_Code>
+            <TimeOut id = "boldest">60</TimeOut>
+            <MaxRecords>500</MaxRecords>
+            <UserDesc/>
+            <Query><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+                <Request Code="A001" Type="S" DateTime="01.02.2009 09:17:03"
+                Region= "1145" Organization="ГИБДД" Operator="Иванов Иван Иванович" Reason= "Вх№234/09">
+                <select/>
+                <where/>
+                <order/>
+                <params>
+                <param id="VIN" val="WAUZZZ8AZMA225383"/>
+                <param id="НомерРегистрационный" val="M112XX97"/>
+                <param id="НомерДвигателя" val="66554433"/>
+                </params>
+                <params>
+                <param id="VIN" val=    "SED52SUD2RV626936" />
+                </params>
+                <params>
+                <param id="VIN" val="WAUZZZ8AZMA225383" />
+                <param id="НомерРегистрационный" val="M112XX97" />
+                <param id="НомерДвигателя" val="66554433" />
+                </params>
+                <params>
+                <param id="VIN" val="SED52SUD2RV626936" />
+                </params>
+                <params>
+                <param id="GID" val="VPBSCRIDB101-9797892684:4449E967D9040C04E053CA6510AC2331" />
+                </params>
+                </Request>
+            ]]></Query>
+        </RunRequest>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
