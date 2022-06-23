@@ -26,5 +26,3 @@ for v in soup.find_all('element'):
         elif key == 'type':
             elementType = value
             print(f'{key} = {elementType}')
-            print(f'{key} = {elementType}')
-            print(f'{key} = {elementType}')
