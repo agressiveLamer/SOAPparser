@@ -10,27 +10,28 @@ with open('f/2.xhtml') as f:
 
 
 def parser(XMLfile):
+    keys = []
     for v in soup.find_all('element'):
         attrs = v.attrs  # присваиваем словарь с атрибутами и значениями тега
         for key in attrs:
-            value = attrs[key]  # значение атрибута
-            yield key, value
-
-            """ Этот кусок кода не работает
-            if key == 'name':
+            value = attrs[key]  # значение атрибутов
+            keys = keys.append(key) #не работает..
+            with open('f/result.csv', mode='a') as result:
+                writer = csv.writer(result)
+                writer.writerow(
+                    (key)
+                )
+            """if key == 'name':
                 name = value
-                print(f'{key} = {name}')
             elif key == 'minOccurs':
                 minOccurs = value
-                print(f'{key} = {minOccurs}')
             elif key == 'maxOccurs':
                 maxOccurs = value
-                print(f'{key} = {maxOccurs}')
             elif key == 'id':
                 elementID = value
-                print(f'{key} = {elementID}')
             elif key == 'type':
                 elementType = value
-                print(f'{key} = {elementType}')
-                """
+            """
 
+
+print(parser(soup))
