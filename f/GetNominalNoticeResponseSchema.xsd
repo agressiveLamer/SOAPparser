@@ -1,0 +1,261 @@
+<xs:schema id="IPSGDatas" targetNamespace="urn:interpol:find:nominal:product:response" elementFormDefault="qualified" version="2.0" ipsgad:hashcode="-320936147" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:interpol:find:nominal:product:response" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:ipsgal="urn:interpol:language" xmlns:ipsgad="urn:interpol:addinfo">
+    <!--Reference table-->
+    <xs:simpleType name="IPSGT_File_Type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="fingerprints"/>
+            <xs:enumeration value="notification"/>
+            <xs:enumeration value="photo"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="IPSGT_ICPO_Language">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="103" ipsgal:en="Arabic" ipsgal:fr="arabe" ipsgal:es="árabe" ipsgal:ar="العربية"/>
+            <xs:enumeration value="120" ipsgal:en="English" ipsgal:fr="anglais" ipsgal:es="inglés" ipsgal:ar="الإنكليزية"/>
+            <xs:enumeration value="124" ipsgal:en="French" ipsgal:fr="français" ipsgal:es="francés" ipsgal:ar="الفرنسية"/>
+            <xs:enumeration value="196" ipsgal:en="Spanish" ipsgal:fr="espagnol" ipsgal:es="español" ipsgal:ar="الإسبانية"/>
+            <xs:enumeration value="382" ipsgal:en="Multiple languages" ipsgal:fr="multilingue" ipsgal:es="varias lenguas"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="IPSGT_Product_Type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ADDENDUM"/>
+            <xs:enumeration value="BLACK" ipsgad:addinfo="cancel_recipient=OS-CDP-NO;internal_recipient=OS-CDP-NO"/>
+            <xs:enumeration value="BLACK DIFF" ipsgad:addinfo="cancel_recipient=Cessations Recherche;internal_recipient=OS-CDP-OCI"/>
+            <xs:enumeration value="BLUE" ipsgad:addinfo="cancel_recipient=OS-CDP-NO;internal_recipient=OS-CDP-NO"/>
+            <xs:enumeration value="BLUE DIFF" ipsgad:addinfo="cancel_recipient=Cessations Recherche;internal_recipient=OS-CDP-OCI"/>
+            <xs:enumeration value="CORRIGENDUM"/>
+            <xs:enumeration value="CRIM"/>
+            <xs:enumeration value="FASTID_TEST"/>
+            <xs:enumeration value="GREEN" ipsgad:addinfo="cancel_recipient=OS-CDP-NO;internal_recipient=OS-CDP-NO"/>
+            <xs:enumeration value="GREEN DIFF" ipsgad:addinfo="cancel_recipient=Cessations Recherche;internal_recipient=OS-CDP-OCI"/>
+            <xs:enumeration value="ORANGE"/>
+            <xs:enumeration value="RED" ipsgad:addinfo="cancel_recipient=OS-CDP-NO;internal_recipient=OS-CDP-NO"/>
+            <xs:enumeration value="RED DIFF" ipsgad:addinfo="cancel_recipient=Cessations Recherche;internal_recipient=OS-CDP-OCI"/>
+            <xs:enumeration value="UN" ipsgad:addinfo="cancel_recipient=OS-NOTICES UN;internal_recipient=OS-NOTICES UN"/>
+            <xs:enumeration value="UN ENTITY" ipsgad:addinfo="cancel_recipient=OS-NOTICES UN;internal_recipient=OS-NOTICES UN"/>
+            <xs:enumeration value="YELLOW" ipsgad:addinfo="cancel_recipient=OS-CDP-NO;internal_recipient=OS-CDP-NO"/>
+            <xs:enumeration value="YELLOW DIFF" ipsgad:addinfo="cancel_recipient=Cessations Recherche;internal_recipient=OS-CDP-OCI"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="IPSGT_Technical_Status">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ACCESS_DENIED"/>
+            <xs:enumeration value="INVALID_SEARCH_ERROR"/>
+            <xs:enumeration value="NO_ANSWER"/>
+            <xs:enumeration value="NO_ERROR"/>
+            <xs:enumeration value="OTHER_ERROR_CODE"/>
+            <xs:enumeration value="TIME_OUT"/>
+            <xs:enumeration value="TOO_MANY_ANSWERS"/>
+            <xs:enumeration value="UNEXPECTED_ERROR"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!--Simple types-->
+    <xs:simpleType name="IPSGS_date" id="core.ipsgs_date">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">This date format is made with this format :
+                YYYYMMDD
+                Where :
+                - YYYY are the four digit of the year
+                - MM are the two digit of the month (0 must be include for month number less than 10)
+                - DD are the two digit of the day (0 must be include for month number less than 10)
+                If a value is unknown, the digit is replace with a 9
+                Samples :
+                20030103  for the 3rd Junary 2003
+                20050299  for the month of february 2005
+                19999999  for the year 1999</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="|[0-9]{8}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!--Abstract types-->
+    <xs:complexType name="IPSG_item" abstract="true" id="core.ipsg_item">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Abstract type, root of all component items. Contains information for identification, and possible qualified links</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:attribute name="item_id" type="xs:string" id="core.ipsg_item.item_id">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">Unique item id</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <!--Main element-->
+    <xs:element name="IPSGDatas" type="IPSGData"/>
+    <!--Components-->
+    <xs:complexType name="IPSGData" id="ipsgdata">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Root element of a message</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence>
+                    <xs:element name="header" type="IPSG_header" minOccurs="1" id="ipsgdata.header">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Contains administrative information about the message</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="datas" type="IPSG_datas" minOccurs="1" id="ipsgdata.datas">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Contains business datas</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="IPSG_header">
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence>
+                    <xs:element name="schema_version" type="xs:string" minOccurs="0" nillable="true"/>
+                    <xs:element name="generator" type="xs:string" minOccurs="0"/>
+                    <xs:element name="generator_version" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="IPSG_datas" id="ipsg_datas">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Business part of the message</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="xs:anyType">
+                <xs:sequence>
+                    <xs:element name="origin" type="IPSG_origin" minOccurs="1" id="ipsg_datas.origin">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Describe the information source</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    <!--COMPONENTS-->
+    <xs:complexType name="IPSG_linked_file" ipsgad:type="component" ipsgad:defaultname="file" id="common.ipsg_linked_file">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Description and/or eventually content of file that can be linked with a component (or an item)</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="IPSG_item">
+                <xs:sequence>
+                    <xs:element name="type_id" type="IPSGT_File_Type" minOccurs="0" id="common.ipsg_linked_file.type_id">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Define the content of the file</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="language_id" type="IPSGT_ICPO_Language" minOccurs="0" id="common.ipsg_linked_file.language_id">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Could be use to give the language of the content of the file</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="ref" type="xs:string" minOccurs="0" id="common.ipsg_linked_file.ref">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Could be use to give the name of the file (with ou without partial path)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="IPSG_nominal" ipsgad:type="component" id="nominal.ipsg_nominal">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Describe a nominal</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="IPSG_item">
+                <xs:sequence>
+                    <!--Components-->
+                    <!--Others informations-->
+                    <xs:group ref="GRP_identity" minOccurs="1" id="nominal.ipsg_nominal.grp_identity">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Contains all the information about the entity</xs:documentation>
+                        </xs:annotation>
+                    </xs:group>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="IPSG_origin" ipsgad:type="component" ipsgad:defaultname="origin" id="common.ipsg_origin">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Information source</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="IPSG_item">
+                <xs:sequence>
+                    <!--Components-->
+                    <xs:element name="product" type="IPSG_product" minOccurs="0" maxOccurs="unbounded" id="common.ipsg_origin.product"/>
+                    <!--Others informations-->
+                    <xs:element name="status_id" type="IPSGT_Technical_Status" minOccurs="0" id="common.ipsg_origin.status_id">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Status of the information source</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="other_status" type="xs:integer" minOccurs="0" id="common.ipsg_origin.other_status">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Supplementary information of the source status if needed</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="name" type="xs:string" minOccurs="0" id="common.ipsg_origin.name">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Name of the information source</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="IPSG_product" ipsgad:type="component" ipsgad:defaultname="product" id="product.ipsg_product">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Define a product, could be, for example a notification or a diffusion</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="IPSG_item">
+                <xs:sequence>
+                    <!--Common component-->
+                    <xs:element name="nominal" type="IPSG_nominal" minOccurs="0" id="product.ipsg_product.nominal">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Associated person(s) described in the product</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="file" type="IPSG_linked_file" minOccurs="0" maxOccurs="unbounded" id="product.ipsg_product.file">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">List of all linked file with this product</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <!--Specific informations-->
+                    <xs:element name="type_id" type="IPSGT_Product_Type" minOccurs="0" id="product.ipsg_product.type_id">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">Type of the product</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:group name="GRP_identity" id="nominal.grp_identity">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">Contain information to describe an identity</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" minOccurs="0" id="nominal.grp_identity.name">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Name of the person (Doe for John DOE)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="forename" type="xs:string" minOccurs="0" id="nominal.grp_identity.forename">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Forename of the person (John for John DOE)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="date_of_birth" type="IPSGS_date" minOccurs="0" id="nominal.grp_identity.date_of_birth">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">Date of birth of the person</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+</xs:schema>
